@@ -12,7 +12,8 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 dotenv.config();
 
-const dbService = require('./service/database')
+const dbService = require('./service/database');
+const { Index } = require('./frontend');
 
 app.use(cors());
 app.use(express.json());
@@ -32,8 +33,7 @@ app.get('/getEducationData', (req, res) => {
     result
         .then(data => res.json({ data: data }))
         .catch(err => console.log(err));
-}
-);
+});
 app.patch('/updateEducationData', (request, response) => {
     const { id, schoolName, schoolYear, concentration, graduated } = request.body;
     const result = db.updateEducationData(id, schoolName, schoolYear, concentration, graduated);
@@ -157,4 +157,5 @@ app.get('/getBank', (req, res) => {
 
 app.listen(process.env.PORT, () => {
     console.log("running on port 5500");
+    new Index().view;
 })
