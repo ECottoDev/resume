@@ -8,6 +8,8 @@
 */
 
 import { addClasses, addEvent, appendChildren, createHeadingText, createParagraph, createSVGButton, createTileContainer } from "../../../../helpers/basicElements.js";
+import { UpdateSkills } from "../../../containers/updateSkills/UpdateSkills.js";
+import { deleteSkillsData } from "../../../dataCalls.js";
 
 export class SkillsTiles {
     constructor(parentProps, skill, refresh = () => { }) {
@@ -21,6 +23,8 @@ export class SkillsTiles {
         appendChildren(this.view, [
             addClasses(createHeadingText(this.skill.name, { bold: true }), 'skillsTiles_skillName'),
             addClasses(createParagraph(this.skill.skillLevel), 'skillsTiles_skillLevel'),
+            addEvent(addClasses(createSVGButton('frontend/assets/icons/Edit.svg'), 'skillsTiles_updateButton'), () => { const close = this.parentProps.displayBox(new UpdateSkills(this.parentProps, this.skill, () => { close() }, () => { this.refresh() }).view) }),
+            addEvent(addClasses(createSVGButton('frontend/assets/icons/Delete.svg'), 'skillsTiles_deleteButton'), async () => { await deleteSkillsData(this.skill.id); this.refresh(); })
         ])
     }
 }

@@ -72,3 +72,4 @@ export class Index {
         return URLParams.success ? URLParams.urlParam : false;
     }
 }
+

@@ -10,6 +10,7 @@
 
 import { addClasses, addEvent, appendChildren, createElementContainer, createHeadingText, createSVGButton, createScrollArea, detachChildren, sortArrayOfObj } from "../../../helpers/basicElements.js";
 import { EducationTiles } from "../../components/tiles/educationTiles/EducationTiles.js";
+import { AddEducation } from "../../containers/addEducation/AddEducation.js";
 import { getEducationData } from "../../dataCalls.js";
 
 export class EducationHistory {
@@ -32,6 +33,7 @@ export class EducationHistory {
                     return addClasses(new EducationTiles(this.parentProps, entry, () => { detachChildren(this.view); this.fetch(); }).view, 'resumeView_educationTile');
                 })]
             ),
+            addEvent(addClasses(createSVGButton('frontend/assets/icons/Plus.svg'), 'resumeView_addButton'), () => { const close = this.parentProps.displayBox(new AddEducation(this.parentProps, () => { close() }, () => { detachChildren(this.view); this.fetch(); }).view) }),
         ])
     }
 }

@@ -10,6 +10,7 @@
 import { addClasses, addEvent, appendChildren, createElementContainer, createHeadingText, createSVGButton, createScrollArea, detachChildren, searchArray, sortArrayOfObj } from "../../../helpers/basicElements.js";
 import { SkillsTiles } from "../../components/tiles/skillsTiles/SkillsTiles.js";
 import { getSkillsData } from "../../dataCalls.js";
+import { AddSkills } from "../addSkill/AddSkills.js";
 
 export class Skills {
     constructor(parentProps) {
@@ -33,6 +34,7 @@ export class Skills {
                     return addClasses(new SkillsTiles(this.parentProps, entry, () => { detachChildren(this.view); this.fetch(); }).view, 'skills_tile');
                 })
             ]),
+            addEvent(addClasses(createSVGButton('frontend/assets/icons/Plus.svg'), 'skills_addButton'), () => { const close = this.parentProps.displayBox(new AddSkills(this.parentProps, () => { close() }, () => { detachChildren(this.view); this.fetch(); }).view) })
         ]);
     }
 }

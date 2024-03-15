@@ -17,7 +17,6 @@
 }
 
 .navigationBar_webPageIcon {
-    margin-left: 1rem;
     grid-area: 1/2/1/2;
     height: 5rem;
     width: 7rem;

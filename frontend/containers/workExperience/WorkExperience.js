@@ -9,6 +9,7 @@
 
 import { addClasses, addEvent, appendChildren, createElementContainer, createHeadingText, createSVGButton, createScrollArea, detachChildren, sortArrayOfObj } from "../../../helpers/basicElements.js";
 import { ExperienceTiles } from "../../components/tiles/experienceTiles/ExperienceTiles.js";
+import { AddExperience } from "../../containers/addExperience/AddExperience.js";
 import { getExperienceData } from "../../dataCalls.js";
 
 export class WorkExperience {
@@ -33,6 +34,7 @@ export class WorkExperience {
                     }).view, 'resumeView_educationTile');
                 })]
             ),
+            addEvent(addClasses(createSVGButton('frontend/assets/icons/Plus.svg'), 'resumeView_addButton'), () => { const close = this.parentProps.displayBox(new AddExperience(this.parentProps, () => { close() }, () => { detachChildren(this.view); this.fetch(); }).view) })
         ])
     }
 }

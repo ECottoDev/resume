@@ -8,6 +8,8 @@
 */
 
 import { addClasses, addEvent, appendChildren, createButton, createHeadingText, createParagraph, createSVGButton, createTileContainer } from "../../../../helpers/basicElements.js";
+import { UpdateEducation } from "../../../containers/updateEducation/UpdateEducation.js";
+import { deleteEducationData } from "../../../dataCalls.js";
 
 export class EducationTiles {
     constructor(parentProps, educationEntry, refresh = () => { }) {
@@ -23,7 +25,10 @@ export class EducationTiles {
             addClasses(createParagraph(this.educationEntry.schoolYear), 'educationTiles_schoolYear'),
             addClasses(createParagraph(this.educationEntry.concentration), 'educationTiles_concentration'),
             this.educationEntry.graduated ? addClasses(createParagraph('Graduated', { bold: true }), 'educationTiles_graduated') : addClasses(createParagraph('Not Graduated', { bold: true }), 'educationTiles_graduated'),
-            
-        ])
+            addEvent(addClasses(createSVGButton('frontend/assets/icons/Edit.svg'), 'educationTiles_updateButton'), () => { const close = this.parentProps.displayBox(new UpdateEducation(this.parentProps, this.educationEntry, () => { close() }, () => { this.refresh() }).view) }),
+            addEvent(addClasses(createSVGButton('frontend/assets/icons/Delete.svg'), 'educationTiles_deleteButton'), async () => {
+                await deleteEducationData(this.educationEntry.id);
+                this.refresh();
+            })])
     }
 }

@@ -3,12 +3,21 @@ const dotenv = require('dotenv');
 dotenv.config();
 let instance = null;
 
+const PORT=5500
+const USERNAME='Luxian'
+const PASSWORD='Luxian1037@Manon'
+const DATABASE='resume'
+const DB_PORT=3306
+const HOST='198.12.246.215'
+
+
 const connection = mysql.createConnection({
-    host: process.env.HOST,
-    user: process.env.USERNAME,
-    password: process.env.PASSWORD,
-    database: process.env.DATABASE,
-    port: process.env.DB_PORT
+    
+    host: HOST,
+    user: USERNAME,
+    password: PASSWORD,
+    database: DATABASE,
+    port: DB_PORT
 });
 
 connection.connect((err) => {
@@ -23,6 +32,10 @@ class DBService {
     //educationHistory
     async getEducationData() {
         try {
+            if (connection.state === 'disconnected') connection.connect((err) => {
+                if (err) throw err;
+                console.log('Connected!');
+            })
             const response = await new Promise((resolve, reject) => {
                 const query = "SELECT * FROM educationHistory;";
                 connection.query(query, (err, results) => {
@@ -39,6 +52,10 @@ class DBService {
 
     async addEducationData(schoolName, schoolYear, concentration, graduated) {
         try {
+            if (connection.state === 'disconnected') connection.connect((err) => {
+                if (err) throw err;
+                console.log('Connected!');
+            })
             const name = schoolName;
             const year = schoolYear;
             const conc = concentration;
@@ -65,6 +82,10 @@ class DBService {
     }
     async updateEducationData(id, schoolName, schoolYear, concentration, graduated) {
         try {
+            if (connection.state === 'disconnected') connection.connect((err) => {
+                if (err) throw err;
+                console.log('Connected!');
+            })
             const response = await new Promise((resolve, reject) => {
                 const query = "UPDATE educationHistory SET schoolName = ?, schoolYear = ?, concentration = ?, graduated = ? WHERE id = ?;";
                 connection.query(query, [schoolName, schoolYear, concentration, graduated, id], (err, result) => {
@@ -81,6 +102,10 @@ class DBService {
     }
     async deleteEducationData(id) {
         try {
+            if (connection.state === 'disconnected') connection.connect((err) => {
+                if (err) throw err;
+                console.log('Connected!');
+            })
             const response = await new Promise((resolve, reject) => {
                 const query = "DELETE FROM educationHistory WHERE id = ?;";
                 connection.query(query, [id], (err, result) => {
@@ -101,6 +126,10 @@ class DBService {
     //experienceHistory
     async getExperienceData() {
         try {
+            if (connection.state === 'disconnected') connection.connect((err) => {
+                if (err) throw err;
+                console.log('Connected!');
+            })
             const response = await new Promise((resolve, reject) => {
                 const query = "SELECT * FROM workExperience;";
                 connection.query(query, (err, results) => {
@@ -117,6 +146,10 @@ class DBService {
 
     async addExperienceData(company, position, duties, timeWorked) {
         try {
+            if (connection.state === 'disconnected') connection.connect((err) => {
+                if (err) throw err;
+                console.log('Connected!');
+            })
 
             const response = await new Promise((resolve, reject) => {
                 const query = "insert into workExperience(company, position, duties, timeWorked) values(?,?,?,?);";
@@ -140,6 +173,10 @@ class DBService {
     }
     async updateExperienceData(id, company, position, duties, timeWorked) {
         try {
+            if (connection.state === 'disconnected') connection.connect((err) => {
+                if (err) throw err;
+                console.log('Connected!');
+            })
             const response = await new Promise((resolve, reject) => {
                 const query = "UPDATE workExperience SET Company = ?, Position = ?, Duties = ?, TimeWorked= ? WHERE id = ?;";
                 connection.query(query, [company, position, duties, timeWorked, id], (err, result) => {
@@ -156,6 +193,10 @@ class DBService {
     }
     async deleteExperienceData(id) {
         try {
+            if (connection.state === 'disconnected') connection.connect((err) => {
+                if (err) throw err;
+                console.log('Connected!');
+            })
             const response = await new Promise((resolve, reject) => {
                 const query = "DELETE FROM workExperience WHERE id = ?;";
                 connection.query(query, [id], (err, result) => {
@@ -174,6 +215,10 @@ class DBService {
     //skills
     async getSkillsData() {
         try {
+            if (connection.state === 'disconnected') connection.connect((err) => {
+                if (err) throw err;
+                console.log('Connected!');
+            })
             const response = await new Promise((resolve, reject) => {
                 const query = "SELECT * FROM skills;";
                 connection.query(query, (err, results) => {
@@ -189,6 +234,10 @@ class DBService {
     }
     async addSkillsData(name, skillLevel) {
         try {
+            if (connection.state === 'disconnected') connection.connect((err) => {
+                if (err) throw err;
+                console.log('Connected!');
+            })
             const response = await new Promise((resolve, reject) => {
                 const query = "insert into skills(name, skillLevel) values(?,?);";
                 connection.query(query, [name, skillLevel], (err, results) => {
@@ -209,6 +258,10 @@ class DBService {
     }
     async updateSkillsData(id, name, skillLevel) {
         try {
+            if (connection.state === 'disconnected') connection.connect((err) => {
+                if (err) throw err;
+                console.log('Connected!');
+            })
             const response = await new Promise((resolve, reject) => {
                 const query = "UPDATE skills SET name = ?, skillLevel = ? WHERE id = ?;";
                 connection.query(query, [name, skillLevel, id], (err, result) => {
@@ -225,6 +278,10 @@ class DBService {
     }
     async deleteSkillsData(id) {
         try {
+            if (connection.state === 'disconnected') connection.connect((err) => {
+                if (err) throw err;
+                console.log('Connected!');
+            })
             const response = await new Promise((resolve, reject) => {
                 const query = "DELETE FROM skills WHERE id = ?;";
                 connection.query(query, [id], (err, result) => {
@@ -241,21 +298,25 @@ class DBService {
         }
     }
 
-    async searchByName(name) {
-        try {
-            const response = await new Promise((resolve, reject) => {
-                const query = "SELECT * FROM BudgetData WHERE cardName = ?;";
+    // async searchByName(name) {
+    //     try {
+    //         if (connection.state === 'disconnected') connection.connect((err) => {
+    //             if (err) throw err;
+    //             console.log('Connected!');
+    //         })
+    //         const response = await new Promise((resolve, reject) => {
+    //             const query = "SELECT * FROM BudgetData WHERE cardName = ?;";
 
-                connection.query(query, [name], (err, results) => {
-                    if (err) reject(new Error(err.message));
-                    resolve(results);
-                })
-            });
+    //             connection.query(query, [name], (err, results) => {
+    //                 if (err) reject(new Error(err.message));
+    //                 resolve(results);
+    //             })
+    //         });
 
-            return response;
-        } catch (error) {
-            console.log(error);
-        }
-    }
+    //         return response;
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }
 }
 module.exports = DBService;
