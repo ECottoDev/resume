@@ -10,10 +10,12 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const dotenv = require('dotenv');
+const http = require('http');
 dotenv.config();
 
+const server = http.createServer(app);
+
 const dbService = require('./service/database');
-const { Index } = require('./frontend');
 
 app.use(cors());
 app.use(express.json());
@@ -157,5 +159,4 @@ app.get('/getBank', (req, res) => {
 
 app.listen(process.env.PORT, () => {
     console.log("running on port 5500");
-    new Index().view;
 })
