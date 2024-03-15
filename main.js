@@ -18,8 +18,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-const db = dbService.getDBServiceInstance()
-//Education database connections
+const db = dbService.getDBServiceInstance() //Education database connections
 app.post('/addEducationData', (req, res) => {
     const { schoolName, schoolYear, concentration, graduated } = req.body;
     const result = db.addEducationData(schoolName, schoolYear, concentration, graduated);

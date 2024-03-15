@@ -4,26 +4,21 @@ dotenv.config();
 let instance = null;
 
 
-const PORT= 5500
-const USERNAME=  'Luxian'
-const PASSWORD=  'Luxian1037@Manon'
-const DATABASE= 'resume'
-const DB_PORT=  3306
-const HOST=  '198.12.246.215'
+// const PORT= 5500
+// const USERNAME=  'Luxian'
+// const PASSWORD=  'Luxian1037@Manon'
+// const DATABASE= 'resume'
+// const DB_PORT=  3306
+// const HOST=  '198.12.246.215'
 
+connection = mysql.createConnection({
+    host:process.env.HOST,
+    user: process.env.USERNAME,
+    password: process.env.PASSWORD,
+    database: process.env.DATABASE,
+    port: process.env.DB_PORT
+}); 
 
-const connection = mysql.createConnection({
-    host: HOST,
-    user: USERNAME,
-    password: PASSWORD,
-    database: DATABASE,
-    port: DB_PORT
-});
-
-connection.connect((err) => {
-    if (err) throw err;
-    console.log('Connected!');
-})
 
 class DBService {
     static getDBServiceInstance() {
