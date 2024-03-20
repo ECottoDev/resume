@@ -26,6 +26,7 @@ export class Index {
         //if any problems arise with the appProps, add {}, before the swirly brackets
         this.appProps = Object.assign(
             {
+            displayBox: this.displayBox.display,
             setNavState: this.setNavState.bind(this),
             showMsg: () => { console.log('display showMessage'); }
         });
